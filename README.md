@@ -1,125 +1,103 @@
-AI-Toolkit LoRA Installers (Local & RunPod)
+ComfyUI GGUF RunPod Installer
 
-This repository contains installer scripts and setup notes for training LoRA models using AI-Toolkit on both local GPUs and cloud GPUs via RunPod.
+This repository provides a focused installer script for setting up GGUF-based models and custom nodes inside an existing ComfyUI environment running on RunPod (JupyterLab).
 
-The goal is to make LoRA training reproducible, low-friction, and stable by automating environment setup and avoiding common CUDA / PyTorch configuration issues, especially under low-VRAM constraints.
+The goal is to make ComfyUI environments stable, reproducible, and low-friction by automating common setup steps and avoiding frequent PyTorch, CUDA, and dependency conflicts.
+
+This repository focuses on infrastructure and environment tooling, not model training or datasets.
 
 ⸻
 
 What this repository provides
 
-• Automated installation of AI-Toolkit
-• CUDA-enabled PyTorch environment setup
-• Local (Windows) and RunPod deployment paths
-• LoRA training workflows for Z-Image Turbo
-• Practical configuration for less than 12GB VRAM
-• Common failure cases and fixes
-
-This repository focuses on infrastructure and tooling, not model files.
+• A single installer script for RunPod-based ComfyUI environments
+• Automated setup of GGUF-based model files
+• Installation of common ComfyUI custom nodes
+• Safe dependency handling to reduce breakage across nodes
+• Practical defaults for GPU-based inference environments
 
 ⸻
 
-Supported environments
+Intended audience
 
-Local (Windows)
+This repository is intended for users who:
 
-• NVIDIA GPUs (RTX / GTX)
-• CUDA 12.6 for RTX 40/30/20/GTX
-• CUDA 12.8 for RTX 50
-• Python 3.10 (64-bit)
-• Node.js 18 or 20 (LTS)
-• Git
+• Already have ComfyUI running
+• Are using RunPod or similar JupyterLab-based GPU environments
+• Want a clean way to install models and nodes without manual debugging
 
-Cloud
-
-• RunPod GPU instances (RTX 4090 or better recommended)
-• PyTorch 2.8 templates
+This is not a full ComfyUI installer and does not include Windows support.
 
 ⸻
 
-Local installation (Windows)
+Supported environment
 
-Requirements
+• Linux (RunPod / JupyterLab)
+• NVIDIA GPU (RTX-class recommended)
+• Existing ComfyUI directory with models/ and custom_nodes/ present
+• Python 3.x available on the system
 
-• CUDA installed and available in PATH
-• Python 3.10 (64-bit)
-• Git
-• Node.js 18 or 20 (LTS)
+⸻
 
-Steps
-	1.	Download the file AI-TOOLKIT_AUTO_INSTALL.bat
-	2.	Place it in a directory without spaces in the path
-	3.	Run the script
-	4.	Select the option matching your GPU and CUDA version
+Installation (RunPod / JupyterLab)
+	1.	Navigate to your ComfyUI root directory
+	2.	Upload the installer script:
+comfyui-gguf-turbo-runpod-install.sh
+	3.	Make the script executable
+	4.	Run the script
 	5.	Wait for installation to complete
-	6.	Launch the AI-Toolkit UI using the provided launcher
+
+The script will:
+• Download GGUF-based model files
+• Install and configure common custom nodes
+• Set up a virtual environment for dependency isolation
 
 ⸻
 
-RunPod installation
+Configuration
 
-Pod setup
-	1.	Create a RunPod account
-	2.	Deploy a new Pod
-	3.	Select a GPU (RTX 4090 or better recommended)
-	4.	Choose a PyTorch 2.8 template
-	5.	Set container disk size to 100GB
-	6.	Expose ports 8888 and 8675
-	7.	Add environment variable AI_TOOLKIT_AUTH with your chosen password
+The script requires the following environment variable to be set before running:
 
-Installation
-	1.	Upload the installer script AI-TOOLKIT_AUTO_INSTALL-RUNPOD.sh
-	2.	Make the script executable
-	3.	Run the installer script
-	4.	Wait for installation to complete
+• HF_BASE – Hugging Face base URL where model files are hosted
 
-After installation, access the AI-Toolkit UI via port 8675.
+Example usage:
+Set HF_BASE to your own Hugging Face repository containing the required model files.
+
+Additional options such as CUDA version, Torch versions, and node selection can be overridden via environment variables inside the script.
 
 ⸻
 
-Low-VRAM training notes
+Low-VRAM and stability notes
 
-• LoRA training is possible with less than 12GB VRAM using layer offloading
-• Resolution selection has a significant impact on memory usage
-• Z-Image Turbo works best with balanced timestep bias for characters
-• High-noise bias is recommended for style training
-• Training speed and stability depend heavily on VRAM availability
+• GGUF models help reduce memory pressure
+• Dependency pinning avoids common breakages
+• Node installation is performed conservatively to prevent conflicts
+• Virtual environments isolate ComfyUI from system Python
 
 ⸻
 
 Troubleshooting
 
-Torch not compiled with CUDA enabled
+If you encounter CUDA or Torch-related errors:
 
-If you encounter an error indicating Torch is not compiled with CUDA enabled:
+• Verify your CUDA version
+• Ensure Torch wheels match your CUDA version
+• Avoid mixing system Python packages with the ComfyUI virtual environment
 
-• Uninstall the existing PyTorch packages
-• Reinstall PyTorch using the CUDA-specific wheels matching your CUDA version
-• For CUDA 12.6 use cu126
-• For CUDA 12.8 use cu128
-• Verify the CUDA version using the nvcc version command
-
-⸻
-
-Lessons learned
-
-• CUDA and PyTorch version mismatch is the most common failure
-• Environment reproducibility matters more than model choice
-• Automating setup saves more time than manual debugging
-• Low-VRAM optimisation requires infrastructure-level thinking
+Most issues arise from mismatched CUDA and PyTorch versions.
 
 ⸻
 
 Scope and intent
 
-• This repository focuses on ML infrastructure and tooling
-• Scripts are provided as-is for reproducible setup
-• Model files and datasets are not included
-• Users are responsible for respecting model and dataset licenses
+• This repository focuses on ML infrastructure tooling
+• Scripts are provided as-is
+• No models or datasets are included
+• Users are responsible for respecting licenses of external assets
 
 ⸻
 
 Credits
 
-• AI-Toolkit and upstream open-source contributors
-• NVIDIA CUDA and PyTorch ecosystems
+• ComfyUI and its open-source contributors
+• PyTorch and NVIDIA CUDA ecosystems
