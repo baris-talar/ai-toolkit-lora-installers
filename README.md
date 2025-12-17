@@ -1,103 +1,61 @@
 ComfyUI GGUF RunPod Installer
 
-This repository provides a focused installer script for setting up GGUF-based models and custom nodes inside an existing ComfyUI environment running on RunPod (JupyterLab).
+One-shot installer for setting up GGUF-based models and required custom nodes inside an existing ComfyUI environment on RunPod.
 
-The goal is to make ComfyUI environments stable, reproducible, and low-friction by automating common setup steps and avoiding frequent PyTorch, CUDA, and dependency conflicts.
-
-This repository focuses on infrastructure and environment tooling, not model training or datasets.
+This script automates model downloads, node installation, and dependency pinning to avoid common CUDA, PyTorch, and package conflicts.
 
 ⸻
 
-What this repository provides
-
-• A single installer script for RunPod-based ComfyUI environments
-• Automated setup of GGUF-based model files
-• Installation of common ComfyUI custom nodes
-• Safe dependency handling to reduce breakage across nodes
-• Practical defaults for GPU-based inference environments
+What this does
+	•	Installs GGUF-based model files
+	•	Clones and configures common ComfyUI custom nodes
+	•	Pins dependencies for stability
+	•	Uses a virtual environment to isolate Python packages
 
 ⸻
 
-Intended audience
-
-This repository is intended for users who:
-
-• Already have ComfyUI running
-• Are using RunPod or similar JupyterLab-based GPU environments
-• Want a clean way to install models and nodes without manual debugging
+Who this is for
+	•	Users who already have ComfyUI running
+	•	RunPod / JupyterLab GPU environments
+	•	Anyone who wants a reproducible, low-friction setup without manual debugging
 
 This is not a full ComfyUI installer and does not include Windows support.
 
 ⸻
 
-Supported environment
-
-• Linux (RunPod / JupyterLab)
-• NVIDIA GPU (RTX-class recommended)
-• Existing ComfyUI directory with models/ and custom_nodes/ present
-• Python 3.x available on the system
+Requirements
+	•	Linux (RunPod / JupyterLab)
+	•	NVIDIA GPU
+	•	Existing ComfyUI directory with models/ and custom_nodes/
+	•	Python 3.x
 
 ⸻
 
-Installation (RunPod / JupyterLab)
-	1.	Navigate to your ComfyUI root directory
-	2.	Upload the installer script:
-comfyui-gguf-turbo-runpod-install.sh
-	3.	Make the script executable
-	4.	Run the script
-	5.	Wait for installation to complete
+Usage (RunPod)
+	1.	Go to your ComfyUI root directory
+	2.	Upload comfyui-gguf-turbo-runpod-install.sh
+	3.	Make it executable and run it
+	4.	Wait for completion
 
-The script will:
-• Download GGUF-based model files
-• Install and configure common custom nodes
-• Set up a virtual environment for dependency isolation
+After running, start ComfyUI normally.
 
 ⸻
 
 Configuration
 
-The script requires the following environment variable to be set before running:
-
-• HF_BASE – Hugging Face base URL where model files are hosted
-
-Example usage:
-Set HF_BASE to your own Hugging Face repository containing the required model files.
-
-Additional options such as CUDA version, Torch versions, and node selection can be overridden via environment variables inside the script.
+The installer uses environment variables for customization.
+	•	HF_BASE – Hugging Face base URL for model files
+	•	Torch, CUDA, and node selection can be overridden inside the script
 
 ⸻
 
-Low-VRAM and stability notes
-
-• GGUF models help reduce memory pressure
-• Dependency pinning avoids common breakages
-• Node installation is performed conservatively to prevent conflicts
-• Virtual environments isolate ComfyUI from system Python
-
-⸻
-
-Troubleshooting
-
-If you encounter CUDA or Torch-related errors:
-
-• Verify your CUDA version
-• Ensure Torch wheels match your CUDA version
-• Avoid mixing system Python packages with the ComfyUI virtual environment
-
-Most issues arise from mismatched CUDA and PyTorch versions.
-
-⸻
-
-Scope and intent
-
-• This repository focuses on ML infrastructure tooling
-• Scripts are provided as-is
-• No models or datasets are included
-• Users are responsible for respecting licenses of external assets
+Scope
+	•	Infrastructure and environment tooling only
+	•	No models or datasets included
+	•	Users are responsible for license compliance
 
 ⸻
 
 Credits
-
-• ComfyUI and its open-source contributors
-• PyTorch and NVIDIA CUDA ecosystems
+	•	ComfyUI and its open-source contributors
+	•	PyTorch and NVIDIA CUDA ecosystems
